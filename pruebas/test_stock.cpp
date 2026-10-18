@@ -28,8 +28,25 @@ int main(){
     CHECK(!gestor.esStockBajo(1, 10));
     CHECK(!gestor.esStockBajo(99, 1000));
 
-    // TODO (Grupo 7): vender exactamente todo el stock, vender dos veces seguidas,
-    // reabastecer un id inexistente, etc.
+        SECCION("CGestorStock: pruebas adicionales");
+
+
+    CHECK(gestor.vender(2, 25) == ResultadoStock::OK);
+    CHECK_EQ(inv.getMedicamentos()[1].getCantidadDisponible(), 0);
+
+
+    CHECK(gestor.vender(2, 1) == ResultadoStock::STOCK_INSUFICIENTE);
+    CHECK_EQ(inv.getMedicamentos()[1].getCantidadDisponible(), 0);
+
+
+    CHECK(gestor.reabastecer(99, 10) == ResultadoStock::NO_EXISTE);
+
+
+    CHECK(gestor.vender(1, -5) == ResultadoStock::CANTIDAD_INVALIDA);
+    CHECK_EQ(inv.getMedicamentos()[0].getCantidadDisponible(), 90);
+
+
+    CHECK(gestor.reabastecer(1, 0) == ResultadoStock::CANTIDAD_INVALIDA);
 
     return RESUMEN();
 }
