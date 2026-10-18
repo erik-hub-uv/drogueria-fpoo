@@ -1,0 +1,24 @@
+@startuml
+title Grupo 7 - Gestion de Stock y Ventas
+
+class CGestorStock {
+  - inventario : CInventario&
+  + CGestorStock(inventario : CInventario&)
+  + vender(id : int, cantidad : int) : ResultadoStock
+  + reabastecer(id : int, cantidad : int) : ResultadoStock
+  + esStockBajo(id : int, umbral : int) : bool
+}
+
+enum ResultadoStock {
+  OK
+  NO_EXISTE
+  CANTIDAD_INVALIDA
+  STOCK_INSUFICIENTE
+}
+
+CGestorStock --> CInventario
+CGestorStock ..> ResultadoStock
+
+@enduml
+cat docs/uml_stock.puml
+l
